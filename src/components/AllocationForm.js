@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
-const AllocationForm = (props) => {
+export default function AllocationForm(props) {
   const { dispatch, remaining } = useContext(AppContext);
 
   const [name, setName] = useState("");
@@ -10,7 +10,7 @@ const AllocationForm = (props) => {
 
   const submitEvent = () => {
     if (cost > remaining) {
-      alert("The value cannot exceed remaining funds  £" + remaining);
+      alert(`The value cannot exceed remaining funds  ${props.currency}` + remaining);
       setCost("");
       return;
     }
@@ -77,6 +77,7 @@ const AllocationForm = (props) => {
             className="custom-select"
             id="inputGroupSelect02"
             onChange={(event) => setAction(event.target.value)}
+            style={{marginRight: "1rem"}}
           >
             <option defaultValue value="Add" name="Add">
               Add
@@ -85,15 +86,16 @@ const AllocationForm = (props) => {
               Reduce
             </option>
           </select>
-
+            <label for="cost">{props.currency}
           <input
             required="required"
             type="number"
             id="cost"
             value={cost}
-            style={{ marginLeft: "2rem", size: 10 }}
+            style={{ marginLeft: "1rem", size: 10 }}
             onChange={(event) => setCost(event.target.value)}
           ></input>
+          </label>
 
           <button
             className="btn btn-primary"
@@ -108,4 +110,3 @@ const AllocationForm = (props) => {
   );
 };
 
-export default AllocationForm;
